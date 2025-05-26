@@ -15,7 +15,7 @@ def image_sharpening(image, c=-1.0):
     return g_sharp
 
 if __name__ == "__main__":
-    image = cv2.imread("4245test3.jpg", 0)
+    image = cv2.imread("test3.jpg", 0)
     cv2_imshow(image)
     c = -1.0
     result = image_sharpening(image, c=c)
