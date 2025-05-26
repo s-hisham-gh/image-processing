@@ -1,0 +1,32 @@
+import cv2
+import numpy as np
+from google.colab.patches import cv2_imshow
+
+def resize(src, new_size):
+    dst_w, dst_h = new_size
+    src_h, src_w = src.shape[:2]
+    if src_h == dst_h and src_w == dst_w:
+        return src.copy()
+    scale_x = float(src_w) / dst_w
+    scale_y = float(src_h) / dst_h
+
+    dst = np.zeros((dst_h, dst_w), dtype=np.uint8)
+    for dst_y in range(dst_h):
+        for dst_x in range(dst_w):
+            src_x = (dst_x + 0.5) * scale_x - 0.5
+            src_y = (dst_y + 0.5) * scale_y - 0.5
+            src_x_1 = int(np.floor(src_x))
+            src_y_1 = int(np.floor(src_y))
+            src_x_2 = min(src_x_1 + 1, src_w - 1)
+            src_y_2 = min(src_y_1 + 1, src_h - 1)
+
+            f_x_y1 = (src_x_2 - src_x) / (src_x_2 - src_x_1) * src[src_y_1, src_x_1] + (src_x - src_x_1) / (src_x_2 - src_x_1) * src[src_y_1, src_x_2]
+            f_x_y2 = (src_x_2 - src_x) / (src_x_2 - src_x_1) * src[src_y_2, src_x_1] + (src_x - src_x_1) / (src_x_2 - src_x_1) * src[src_y_2, src_x_2]
+            dst[dst_y, dst_x] = int((src_y_2 - src_y) / (src_y_2 - src_y_1) * f_x_y1 + (src_y - src_y_1) / (src_y_2 - src_y_1) * f_x_y2)
+
+    return dst
+
+img_in = cv2.imread('4245test2.jpg', 0)
+img_out = resize(img_in, (200, 200))
+cv2_imshow(img_out)
+cv2.imwrite('test2_resized.jpg', img_out)
