@@ -26,7 +26,7 @@ def resize(src, new_size):
 
     return dst
 
-img_in = cv2.imread('4245test2.jpg', 0)
+img_in = cv2.imread('test2.jpg', 0)
 img_out = resize(img_in, (200, 200))
 cv2_imshow(img_out)
 cv2.imwrite('test2_resized.jpg', img_out)
