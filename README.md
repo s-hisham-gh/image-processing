@@ -1,4 +1,4 @@
-The following image processing techniques are implemented in this repository:
+The following image processing techniques are implemented in **task1** of this repository:
 
 1. Bilinear Interpolation
    - Script: `bilinear_interpolation.py`
