@@ -1,0 +1,22 @@
+import cv2
+from google.colab.patches import cv2_imshow
+import numpy as np
+
+def image_sharpening(image, c=-1.0):
+    blurred_image = cv2.GaussianBlur(image, (3,3), 0)
+    edge_map = cv2.Laplacian(blurred_image, cv2.CV_16S, ksize=3)
+    cv2_imshow(np.abs(edge_map))
+    image = image.astype(float)
+    edge_map = edge_map.astype(float)
+    g_sharp = image - c * edge_map
+    g_sharp = np.maximum(g_sharp, np.zeros(g_sharp.shape))
+    g_sharp = np.minimum(g_sharp, 255 * np.ones(g_sharp.shape))
+    g_sharp = g_sharp.round().astype(np.uint8)
+    return g_sharp
+
+if __name__ == "__main__":
+    image = cv2.imread("4245test3.jpg", 0)
+    cv2_imshow(image)
+    c = -1.0
+    result = image_sharpening(image, c=c)
+    cv2_imshow(result)
