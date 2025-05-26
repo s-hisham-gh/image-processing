@@ -1,0 +1,44 @@
+import numpy as np
+import cv2
+from matplotlib import pyplot as plt
+from google.colab.patches import cv2_imshow
+
+def plot_hist(img, color='b', L=256):
+    plt.hist(img.flatten(), L, [0, L], color=color)
+    plt.xlim([0, L])
+    plt.legend(('histogram'), loc='upper left')
+    plt.show()
+
+img_gray = cv2.imread('test1.png', 0)
+cv2_imshow(img_gray)
+plot_hist(img_gray)
+
+img_eq = cv2.equalizeHist(img_gray)
+cv2_imshow(img_eq)
+plot_hist(img_eq)
+
+img_gray = cv2.imread('test1.png', 0)
+L = 256
+pr_hist = np.zeros([L])
+H, W = img_gray.shape
+
+for i in range(H):
+    for j in range(W):
+        pixel_value = img_gray[i, j]
+        pr_hist[int(pixel_value)] = pr_hist[int(pixel_value)] + 1
+
+pr_hist /= H * W
+
+eq_hist = np.zeros_like(pr_hist)
+s_img = np.zeros_like(img_gray)
+
+for k in range(L):
+    eq_hist[k] = round(255 * np.sum(pr_hist[:k+1]))
+
+for i in range(H):
+    for j in range(W):
+        pixel_value = img_gray[i, j]
+        s_img[i, j] = eq_hist[pixel_value]
+
+plot_hist(s_img)
+cv2_imshow(s_img)
