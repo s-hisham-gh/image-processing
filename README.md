@@ -17,6 +17,8 @@ The following image processing techniques are implemented in **task1** of this r
 
 
 **How to use**:
+Preferred: upload files in task1 to Google Colab.
+Else:
    ```bash
    git clone https://github.com/s-hisham-gh/image-processing.git 
    cd image-processing/task1
@@ -39,6 +41,8 @@ The following image processing techniques are implemented in **task2** of this r
    - Output: Restored version of the noisy image.
 
 **How to use**:
+Preferred: upload files in task2 to Google Colab.
+Else:
    ```bash
    git clone https://github.com/s-hisham-gh/image-processing.git 
    cd image-processing/task2
